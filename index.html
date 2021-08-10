@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NoteX</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <!-- Adding VueJS -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script src="https://unpkg.com/moment"></script>
+        
+        <div class="parent">
+            <div class="header">
+                <label class="logo"><i class="fas fa-feather-alt"></i> NoteX</label>
+            </div>
+
+            <div class="content">
+                
+                <div class="left-panel">
+                    <div class="new-note">
+                        <button @click="addNote" :title="addButtonTitle" class="add-button">+ New Note</button>
+                    </div>
+                    <div class="notes">
+                        <div class="note" v-for="note in sortedNotes" v-on:click="selectNote(note)" v-bind:class="{selected: note === selectedNote}"><i class="icon material-icons" v-if="note.favorite">star</i>{{ note.title }}</div>
+                    </div>
+                </div>
+
+                <template v-if="selectedNote">
+                    <div class="right-panel">
+                        <div class="page">
+                            <div class="title">
+                                <input id="t1" v-model="selectedNote.title" placeholder="Note title"/>
+
+                                <button id="t2" @click="favoriteNote" title="Mark as Favorite!"><i class="material-icons">{{ selectedNote.favorite ? 'star' : 'star_border' }}</i></button>
+
+                                <button id="t3" @click="removeNote" title="Remove Note"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+
+                            <div class="toolbar">
+                                <!-- To be added in next update -->
+                            </div>
+
+                            <div class="editor">
+                                <textarea id="sampleeditor" v-model="selectedNote.content"></textarea>
+                            </div>
+
+                            <div class="information">
+                                <span class="date">
+                                    <span class="label">Created</span>
+                                    <span class="value">{{ selectedNote.created | date }}</span>
+                                </span>
+                                
+                                <span class="lines">
+                                    <span class="label">Lines</span>
+                                    <span class="value">{{ linesCount }}</span>
+                                </span>
+                                
+                                <span class="words">
+                                    <span class="label">Words</span>
+                                    <span class="value">{{ wordsCount }}</span> 
+                                </span>
+                                
+                                <span class="characters">
+                                    <span class="label">Characters</span>
+                                    <span class="value">{{ charactersCount }}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="footer">
+                <p>&#169 Project by A.S.K</p>
+            </div>
+        </div>
+
+        <!-- Adding JavaScript for the App -->
+        <script src="script.js"></script>
+    </body>
+</html>
